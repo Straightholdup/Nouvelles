@@ -1,2 +1,6 @@
-*
+*/
+!avatars/
+avatars/*
+!avatars/user-solid.svg
+
 !.gitignore

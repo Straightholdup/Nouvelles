@@ -19,7 +19,8 @@ class AuthorFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'avatar' => $this->faker->imageUrl(),
+            'avatar' => 'avatars/user-solid.svg',
+            'password' => $this->faker->password,
         ];
     }
 }

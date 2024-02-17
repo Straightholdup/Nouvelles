@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNewsRequest extends FormRequest
+class IndexNewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,10 @@ class StoreNewsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'author_id' => ['required', 'exists:authors,id'],
-            'title' => 'required|string|max:255',
-            'announcement' => 'required|string',
-            'text' => 'required|string',
-            'publication_date' => 'required|date',
+            'author_id' => 'sometimes|integer',
+            'category_id' => 'sometimes|integer',
+            'include_subcategories' => 'sometimes|boolean',
+            'title' => 'sometimes|string',
         ];
     }
 }

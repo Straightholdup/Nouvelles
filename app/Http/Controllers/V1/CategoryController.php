@@ -5,6 +5,8 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreCategoryRequest;
 use App\Http\Requests\V1\UpdateCategoryRequest;
+use App\Http\Resources\V1\CategoryCollection;
+use App\Http\Resources\V1\CategoryResource;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -12,9 +14,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): CategoryCollection
     {
-        return Category::all();
+        return new CategoryCollection(Category::all());
     }
 
 
@@ -23,15 +25,15 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        return Category::create($request->all());
+        return new CategoryResource(Category::create($request->all()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Category $category): CategoryResource
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
 

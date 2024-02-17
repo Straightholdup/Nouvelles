@@ -33,7 +33,7 @@ class AuthorController extends Controller
 
         // Handle avatar image upload if provided
         if ($request->hasFile('avatar')) {
-            $avatarPath = $validated->file('avatar')->store('avatars');
+            $avatarPath = $validated['avatar']->store('avatars', 'public');
             $author->avatar = $avatarPath;
         }
 

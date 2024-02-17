@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\CategoryController;
 use App\Http\Controllers\V1\NewsController;
 use Illuminate\Http\Request;
@@ -17,10 +18,13 @@ use App\Http\Controllers\V1\AuthorController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::apiResource('authors', AuthorController::class);
-Route::apiResource('categories', CategoryController::class);
-Route::apiResource('news', NewsController::class);
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\V1', 'middleware' => 'auth:sanctum'], function () {
+    Route::apiResources([
+        'authors' => AuthorController::class,
+        'categories' => CategoryController::class,
+        'news' => NewsController::class,
+    ]);
+});
