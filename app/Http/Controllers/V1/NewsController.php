@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Events\NewsCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\IndexNewsRequest;
 use App\Http\Requests\V1\StoreNewsRequest;
@@ -17,6 +18,8 @@ class NewsController extends Controller
      */
     public function index(IndexNewsRequest $request)
     {
+        $this->authorize('viewAny', News::class);
+
         $news = News::byAuthor($request->input('author_id'))
             ->byCategory($request->input('category_id'), $request->input('include_subcategories', false))
             ->byTitle($request->input('title'));
@@ -30,7 +33,17 @@ class NewsController extends Controller
      */
     public function store(StoreNewsRequest $request)
     {
-        return new NewsResource(News::create($request->all()));
+        $request->user()->can('create', News::class);
+
+        $news = News::create([
+            'title' => $request->title,
+            'announcement' => $request->announcement,
+            'text' => $request->text,
+            'publication_date' => $request->publication_date,
+            'author_id' => $request->user()->id,
+        ]);
+        NewsCreated::dispatch($news);
+        return new NewsResource($news);
     }
 
     /**
@@ -42,19 +55,19 @@ class NewsController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateNewsRequest $request, News $news)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(News $news)
-    {
-        //
-    }
+//    /**
+//     * Update the specified resource in storage.
+//     */
+//    public function update(UpdateNewsRequest $request, News $news)
+//    {
+//        //
+//    }
+//
+//    /**
+//     * Remove the specified resource from storage.
+//     */
+//    public function destroy(News $news)
+//    {
+//        //
+//    }
 }

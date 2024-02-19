@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel with Sail
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Prerequisites
 
-## About Laravel
+Before you begin, make sure you have the following installed on your system:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [Composer](https://getcomposer.org/)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Setting Up Environment Variables
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before running the Laravel application, you need to set up your environment variables, especially for mail
+configuration. Follow these steps:
 
-## Learning Laravel
+1. Copy the `.env.example` file and rename it to `.env`:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+   ```bash
+   cp .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Open the .env file in a text editor.
+3. Configure the mail variables under the "Mail Configuration" section. These variables control how your application
+   sends emails. Below are the common mail variables to configure:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```
+       MAIL_MAILER=smtp
+       MAIL_HOST=smtp.gmail.com
+       MAIL_PORT=465
+       MAIL_USERNAME=your_username
+       MAIL_PASSWORD=your_password
+       MAIL_ENCRYPTION=tls
+       MAIL_FROM_ADDRESS=your_email@example.com
+       MAIL_FROM_NAME="${APP_NAME}"
+    ```
 
-## Laravel Sponsors
+## Running Commands
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+You can run various artisan commands and Composer commands using Sail. Here are some examples:
 
-### Premium Partners
+- **Install Composer dependencies**:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+  ```bash
+  ./vendor/bin/sail composer install
+  ```
 
-## Contributing
+- **Run an Artisan command**:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+  ```bash
+  ./vendor/bin/sail artisan migrate:fresh --seed
+  ```
 
-## Code of Conduct
+  Alternative (if Sail is not running):
+    ```bash
+      docker exec -it  nouvelles-laravel.test-1 php artisan migrate:fresh --seed
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Start Sail
 
-## Security Vulnerabilities
+Follow these steps to set up a Laravel project using Sail:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. **Navigate into your project directory**:
 
-## License
+   ```bash
+   cd nouvelles
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. **Start Sail**:
+
+   ```bash
+   ./vendor/bin/sail up
+   ```
+
+   This command will start the Docker containers required for your Laravel application.
+
+3. **Access your Laravel application**:
+
+   Open your web browser and navigate to `http://localhost`. You should see the default Laravel welcome page.
+
+## Stopping Sail
+
+To stop Sail and shut down your Docker containers, use the following command:
+
+```bash
+./vendor/bin/sail stop
+```
+
+## Importing Postman Collection
+
+If you're using [Postman](https://www.postman.com/) for API testing, you can import the provided Postman collection to
+quickly set up requests for the Laravel API endpoints.
+
+To import the Postman collection:
+
+1. Open Postman and locate the "Import" button in the top-left corner.
+2. Click "Import" and select the downloaded `Thousand.postman_collection.json` file.
+3. Postman will import the collection along with its requests and folders.
+4. You can now explore and execute the requests defined in the collection to interact with your Laravel application's
+   API endpoints.

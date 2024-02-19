@@ -37,19 +37,19 @@ class CategoryController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
-    }
+//    /**
+//     * Update the specified resource in storage.
+//     */
+//    public function update(UpdateCategoryRequest $request, Category $category)
+//    {
+//        //
+//    }
+//
+//    /**
+//     * Remove the specified resource from storage.
+//     */
+//    public function destroy(Category $category)
+//    {
+//        //
+//    }
 }

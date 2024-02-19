@@ -30,16 +30,14 @@ class AuthorController extends Controller
         $author = new Author();
         $author->name = $validated['name'];
         $author->email = $validated['email'];
+        $author->password = $validated['password'];
 
-        // Handle avatar image upload if provided
         if ($request->hasFile('avatar')) {
             $avatarPath = $validated['avatar']->store('avatars', 'public');
             $author->avatar = $avatarPath;
         }
 
-        // Save the Author instance to the database
         $author->save();
-
         return new AuthorResource($author);
     }
 
@@ -51,19 +49,19 @@ class AuthorController extends Controller
         return new AuthorResource($author);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+//    /**
+//     * Update the specified resource in storage.
+//     */
+//    public function update(Request $request, string $id)
+//    {
+//        //
+//    }
+//
+//    /**
+//     * Remove the specified resource from storage.
+//     */
+//    public function destroy(string $id)
+//    {
+//        //
+//    }
 }

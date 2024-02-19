@@ -14,10 +14,14 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $subcategories = [];
+        if ($this->subcategories) {
+            $subcategories = new CategoryCollection($this->subcategories);
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'subcategories' => new CategoryResourceCollection($this->whenLoaded('subcategories')),
+            'subcategories' => $subcategories,
         ];
     }
 }

@@ -22,7 +22,6 @@ class StoreNewsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'author_id' => ['required', 'exists:authors,id'],
             'title' => 'required|string|max:255',
             'announcement' => 'required|string',
             'text' => 'required|string',
